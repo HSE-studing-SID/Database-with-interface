@@ -1,3 +1,19 @@
+CREATE TYPE АКТИВНОСТЬ AS ENUM
+(
+	'Плавание',
+	'Силовая тренировка',
+	'Растяжка'
+	-- // todo add more
+);
+
+CREATE TYPE МЕСТО AS ENUM 
+(
+    'Бассейн',
+    'Тренажерный зал',
+    'Малый зал',
+    'Большой зал'
+);
+
 CREATE TABLE ДОЛЖНОСТЬ
 (
     ИДЕНТИФИКАТОР             SERIAL          PRIMARY KEY,
@@ -14,15 +30,8 @@ CREATE TABLE КЛИЕНТ
     ФАМИЛИЯ             VARCHAR(64)     NOT NULL,
     ОТЧЕСТВО            VARCHAR(64)     NOT NULL,
     ТЕЛЕФОН             INTEGER         NOT NULL,
-    ПАССПОРТ            INTEGER         NOT NULL
-);
-
-CREATE TYPE АКТИВНОСТЬ AS ENUM
-(
-	'Плавание',
-	'Силовая тренировка',
-	'Растяжка'
-	-- // todo add more
+    "ПАССПОРТ, СЕРИЯ"   SERIAL          NOT NULL,
+    "ПАССПОРТ, НОМЕР"   SERIAL          NOT NULL
 );
 
 CREATE TABLE АБОНЕМЕНТ
@@ -31,7 +40,7 @@ CREATE TABLE АБОНЕМЕНТ
     ЦЕНА             	         SMALLINT    	NOT NULL,
     "ПРОДОЛЖИТЕЛЬНОСТЬ, мес"     SMALLINT    	NOT NULL,
     НАЗВАНИЕ                     VARCHAR(64)    NOT NULL,
-    "РАЗРЕШЕННЫЕ АКТИВНОСТИ"     АКТИВНОСТЬ[]       NOT NULL
+    "РАЗРЕШЕННЫЕ АКТИВНОСТИ"     АКТИВНОСТЬ[]   NOT NULL
 );
 
 CREATE TABLE РАБОТНИК
@@ -52,14 +61,6 @@ CREATE TABLE ДОГОВОР
     "НАЧАЛО ДЕЙСТВИЯ"       DATE            NOT NULL,
     "КОНЕЦ ДЕЙСТВИЯ"        DATE            NOT NULL,
     CHECK("НАЧАЛО ДЕЙСТВИЯ" < "КОНЕЦ ДЕЙСТВИЯ")
-);
-
-CREATE TYPE МЕСТО AS ENUM 
-(
-    'Бассейн',
-    'Тренажерный зал',
-    'Малый зал',
-    'Большой зал'
 );
 
 CREATE TABLE РАСПИСАНИЕ
