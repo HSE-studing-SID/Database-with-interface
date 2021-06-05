@@ -6,7 +6,7 @@ CREATE TYPE АКТИВНОСТЬ AS ENUM
 	-- // todo add more
 );
 
-CREATE TYPE МЕСТО AS ENUM 
+CREATE TYPE ПОМЕЩЕНИЕ AS ENUM 
 (
     'Бассейн',
     'Тренажерный зал',
@@ -37,7 +37,7 @@ CREATE TABLE КЛИЕНТ
 CREATE TABLE АБОНЕМЕНТ
 (
     ИДЕНТИФИКАТОР                SERIAL         PRIMARY KEY,
-    ЦЕНА             	         SMALLINT    	NOT NULL,
+    ЦЕНА             	         INT        	NOT NULL,
     "ПРОДОЛЖИТЕЛЬНОСТЬ, мес"     SMALLINT    	NOT NULL,
     НАЗВАНИЕ                     VARCHAR(64)    NOT NULL,
     "РАЗРЕШЕННЫЕ АКТИВНОСТИ"     АКТИВНОСТЬ[]   NOT NULL
@@ -60,6 +60,7 @@ CREATE TABLE ДОГОВОР
     АБОНЕМЕНТ 	            SMALLINT        NOT NULL REFERENCES АБОНЕМЕНТ (ИДЕНТИФИКАТОР),
     "НАЧАЛО ДЕЙСТВИЯ"       DATE            NOT NULL,
     "КОНЕЦ ДЕЙСТВИЯ"        DATE            NOT NULL,
+    "СКИДКА, %"             SMALLINT        NOT NULL,
     CHECK("НАЧАЛО ДЕЙСТВИЯ" < "КОНЕЦ ДЕЙСТВИЯ")
 );
 
@@ -68,8 +69,19 @@ CREATE TABLE РАСПИСАНИЕ
     ИДЕНТИФИКАТОР           SERIAL          PRIMARY KEY,
     ТРЕНЕР                  SERIAL          NOT NULL REFERENCES РАБОТНИК (ИДЕНТИФИКАТОР),
     АКТИВНОСТЬ              АКТИВНОСТЬ      NOT NULL,
-    ЗАЛ                     МЕСТО           NOT NULL,
-    НАЧАЛО                  TIMESTAMP 		NOT NULL,
+    ЗАЛ                     ПОМЕЩЕНИЕ       NOT NULL,
+    НАЧАЛО                  TIMESTAMP       NOT NULL,
     КОНЕЦ                   TIMESTAMP       NOT NULL
 -- CHECK() // todo
+);
+
+CREATE TABLE АКЦИИ
+(
+    "ИДЕНТИФИКАТОР АБОНЕМЕНТА"  SERIAL      PRIMARY KEY REFERENCES АБОНЕМЕНТ (ИДЕНТИФИКАТОР),
+    "РАЗМЕР СКИДКИ, %"          SMALLINT    NOT NULL,
+    "НАЧАЛО АКЦИИ"              DATE        NOT NULL,
+    "КОНЕЦ АКЦИИ"               DATE        NOT NULL,
+    "НОВАЯ СТОИМОСТЬ"           INT         NOT NULL,
+    CHECK(("РАЗМЕР СКИДКИ, %" >= 0 AND "РАЗМЕР СКИДКИ, %" <= 100)
+     AND ("НАЧАЛО АКЦИИ" < "КОНЕЦ АКЦИИ"))
 );
