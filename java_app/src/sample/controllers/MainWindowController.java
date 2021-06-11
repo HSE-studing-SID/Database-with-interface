@@ -31,12 +31,13 @@ public class MainWindowController {
 
     @FXML
     void initialize() {
+        // DBsDropList.setItems()
         /*
          * todo fill DBsDropList
          */
 
         ConnectToDBButton.setOnAction(actionEvent -> {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/Database.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/assets/Database.fxml"));
 
             try {
                 loader.load();
@@ -46,12 +47,11 @@ public class MainWindowController {
 
             Stage stage = new Stage();
             stage.setScene(new Scene(loader.getRoot()));
-            stage.showAndWait();
+            stage.show();
         });
 
         CreateNewDBButton.setOnAction(actionEvent -> {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/CreateDB.fxml"));
-
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/assets/CreateDB.fxml"));
 
             try {
                 loader.load();
@@ -61,8 +61,7 @@ public class MainWindowController {
 
             Stage stage = new Stage();
             stage.setScene(new Scene(loader.getRoot()));
-            stage.showAndWait();
+            stage.show();
         });
     }
-
 }

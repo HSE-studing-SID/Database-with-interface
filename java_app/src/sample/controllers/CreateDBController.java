@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -25,28 +26,33 @@ public class CreateDBController {
     private Button CreateDBButton;
 
     @FXML
+    private Label errorLable;
+
+    @FXML
     void initialize() {
-        String DBName = newDBNameField.getText();
-
-        /*
-         * todo check if DBName already exists
-         */
-
         // Change window on button pressed
         CreateDBButton.setOnAction(actionEvent -> {
-            CreateDBButton.getScene().getWindow().hide();
+            String text = newDBNameField.getText();
+            if (!text.isEmpty() /* && !isExist(text) */) {
+                CreateDBButton.getScene().getWindow().hide();
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/Database.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/assets/Database.fxml"));
 
-            try {
-                loader.load();
-            } catch (IOException e) {
-                e.printStackTrace();
+                try {
+                    loader.load();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                Stage stage = new Stage();
+                stage.setScene(new Scene(loader.getRoot()));
+                stage.setTitle("Создать базу данных");
+                stage.show();
+            } else if (text.isEmpty()) {
+                errorLable.setText("Поле пустое!");
+            } else {
+                errorLable.setText("База данных с таким именем уже существует");
             }
-
-            Stage stage = new Stage();
-            stage.setScene(new Scene(loader.getRoot()));
-            stage.showAndWait();
         });
     }
 }
