@@ -47,6 +47,7 @@ public class CreateDBController {
                     e.printStackTrace();
                 }
 
+
                 try {
                     createDB(newDBname, Server.getConnection());
                 } catch (Exception e) {

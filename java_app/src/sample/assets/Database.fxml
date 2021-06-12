@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.layout.AnchorPane?>
-
 
 <AnchorPane prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: #FFE4B5;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.DatabaseController">
    <children>
@@ -16,7 +16,11 @@
                 <Menu mnemonicParsing="false" text="File">
                   <items>
                     <MenuItem mnemonicParsing="false" text="Find (Ctrl + F)" />
-                        <MenuItem mnemonicParsing="false" text="Database settings" />
+                        <Menu fx:id="DBSettings" mnemonicParsing="false" text="Database settings">
+                          <items>
+                            <MenuItem mnemonicParsing="false" text="Delete database" />
+                          </items>
+                        </Menu>
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Edit">
@@ -47,5 +51,6 @@
             </MenuBar>
          </children>
       </AnchorPane>
+      <Label fx:id="label" layoutX="1489.0" layoutY="842.0" />
    </children>
 </AnchorPane>
