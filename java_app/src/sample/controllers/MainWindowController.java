@@ -6,10 +6,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class MainWindowController {
@@ -21,7 +23,7 @@ public class MainWindowController {
     private URL location;
 
     @FXML
-    private ComboBox<?> DBsDropList;
+    private ComboBox<String> DBsDropList;
 
     @FXML
     private Button ConnectToDBButton;
@@ -30,24 +32,31 @@ public class MainWindowController {
     private Button CreateNewDBButton;
 
     @FXML
-    void initialize() {
+    private Label ErrorLabel;
+
+    @FXML
+    void initialize() throws SQLException {
         // DBsDropList.setItems()
         /*
          * todo fill DBsDropList
          */
 
         ConnectToDBButton.setOnAction(actionEvent -> {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/assets/Database.fxml"));
+            if (!DBsDropList.getSelectionModel().isEmpty()) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/assets/Database.fxml"));
 
-            try {
-                loader.load();
-            } catch (IOException e) {
-                e.printStackTrace();
+                try {
+                    loader.load();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                Stage stage = new Stage();
+                stage.setScene(new Scene(loader.getRoot()));
+                stage.show();
+            } else {
+                ErrorLabel.setText("Укажите базу данных или создайте новую");
             }
-
-            Stage stage = new Stage();
-            stage.setScene(new Scene(loader.getRoot()));
-            stage.show();
         });
 
         CreateNewDBButton.setOnAction(actionEvent -> {
@@ -61,6 +70,7 @@ public class MainWindowController {
 
             Stage stage = new Stage();
             stage.setScene(new Scene(loader.getRoot()));
+            stage.setTitle("Создать базу данных");
             stage.show();
         });
     }

@@ -32,10 +32,9 @@ public class CreateDBController {
     void initialize() {
         // Change window on button pressed
         CreateDBButton.setOnAction(actionEvent -> {
-            String text = newDBNameField.getText();
-            if (!text.isEmpty() /* && !isExist(text) */) {
+            String newDBname = newDBNameField.getText();
+            if (!newDBname.isEmpty() /* && !isExist(text) */) {
                 CreateDBButton.getScene().getWindow().hide();
-
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/assets/Database.fxml"));
 
                 try {
@@ -44,11 +43,13 @@ public class CreateDBController {
                     e.printStackTrace();
                 }
 
+                // todo SQL create database 'newDBname'
+
                 Stage stage = new Stage();
                 stage.setScene(new Scene(loader.getRoot()));
-                stage.setTitle("Создать базу данных");
+                stage.setTitle(newDBname);
                 stage.show();
-            } else if (text.isEmpty()) {
+            } else if (newDBname.isEmpty()) {
                 errorLable.setText("Поле пустое!");
             } else {
                 errorLable.setText("База данных с таким именем уже существует");

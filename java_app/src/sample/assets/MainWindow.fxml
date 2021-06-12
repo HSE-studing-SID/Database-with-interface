@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -19,7 +20,10 @@
    <children>
       <AnchorPane prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #FFE4B5;">
          <children>
-            <AnchorPane layoutX="401.0" layoutY="125.0" prefHeight="491.0" prefWidth="455.0" style="-fx-background-color: #FF7F50;" />
+            <AnchorPane layoutX="401.0" layoutY="125.0" prefHeight="491.0" prefWidth="455.0" style="-fx-background-color: #FF7F50;">
+               <children>
+                  <Label fx:id="ErrorLabel" layoutX="90.0" layoutY="197.0" prefHeight="19.0" prefWidth="276.0" textFill="RED" />
+               </children></AnchorPane>
             <Text fill="WHITE" fontSmoothingType="LCD" layoutX="448.0" layoutY="218.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Подключиться к сущетвующей базе данных:" wrappingWidth="360.1826171875">
                <font>
                   <Font name="Segoe UI Bold Italic" size="22.0" />
