@@ -1,9 +1,20 @@
 package sample.controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
 public class DatabaseController {
 
@@ -14,35 +25,68 @@ public class DatabaseController {
     private URL location;
 
     @FXML
+    private Label label;
+
+    @FXML
     private MenuBar DatabaseMenuBar;
 
     @FXML
+    private Menu DBSettings;
+
+    @FXML
     void initialize() {
-        /*
-         * todo add title to stage with database name
-         */
         var menus = DatabaseMenuBar.getMenus();
         var File = menus.get(0).getItems();
         var Edit = menus.get(1).getItems();
 
-        // find
-        File.get(0).setOnAction(actionEvent -> {
-
-        });
-
         // database settings
-        File.get(1).setOnAction(actionEvent -> {
+        var settings = DBSettings.getItems();
+        // delete database
+        settings.get(0).setOnAction(actionEvent -> {
+            Label text = new Label("Вы действительно хотите удалить эту базу данных?\nЭто действие нельзя отменить");
+            StackPane.setAlignment(text, Pos.CENTER);
 
+            Button confirm = new Button("Да");
+            confirm.setPrefSize(100, 50);
+
+            Button cancel = new Button("Отмена");
+            cancel.setPrefSize(100, 50);
+
+            StackPane.setAlignment(cancel, Pos.BOTTOM_RIGHT);
+            StackPane.setMargin(cancel, new Insets(15, 15, 15, 15));
+            StackPane.setAlignment(confirm, Pos.BOTTOM_LEFT);
+            StackPane.setMargin(confirm, new Insets(15, 15, 15, 15));
+            StackPane pane = new StackPane(text, confirm, cancel);
+            pane.setStyle("-fx-background-color: #FFE4B5");
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(pane, 400, 200));
+            stage.setTitle("Подтверждение");
+            stage.show();
+
+            cancel.setOnAction(actionEvent1 -> {
+                stage.hide();
+            });
+            confirm.setOnAction(actionEvent1 -> {
+                // todo SQL delete database
+                stage.hide();
+                label.getScene().getWindow().hide();
+            });
         });
 
         // create table
         Edit.get(0).setOnAction(actionEvent -> {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/assets/CreateTable.fxml"));
 
-        });
+            try {
+                loader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
-        // delete table
-        Edit.get(1).setOnAction(actionEvent -> {
-
+            Stage stage = new Stage();
+            stage.setScene(new Scene(loader.getRoot()));
+            stage.show();
         });
 
         // clear table
