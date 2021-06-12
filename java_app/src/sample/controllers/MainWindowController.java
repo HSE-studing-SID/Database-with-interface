@@ -10,6 +10,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ResourceBundle;
 
 public class MainWindowController {
@@ -30,11 +34,21 @@ public class MainWindowController {
     private Button CreateNewDBButton;
 
     @FXML
-    void initialize() {
-        // DBsDropList.setItems()
-        /*
-         * todo fill DBsDropList
-         */
+    void initialize() throws SQLException {
+      //  Connection connection = <your java.sql.Connection>
+    //    ResultSet resultSet = connection.getMetaData().getCatalogs();
+
+        //iterate each catalog in the ResultSet
+   //     while (resultSet.next()) {
+   //         // Get the database name, which is at position 1
+        //        String databaseName = resultSet.getString(1);
+   //     }
+   //     resultSet.close();
+
+      //  ResultSet rs = Statement.executeQuery("select UTL_INADDR.GET_HOST_NAME from dual");
+      //  while(rs.next())
+     //       System.out.println(rs.getString(1));
+
 
         ConnectToDBButton.setOnAction(actionEvent -> {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/assets/Database.fxml"));
@@ -64,4 +78,6 @@ public class MainWindowController {
             stage.show();
         });
     }
+
+
 }
