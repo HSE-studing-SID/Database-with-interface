@@ -2,6 +2,9 @@ package sample.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.sql.*;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import sample.Server;
 
 public class CreateDBController {
 
@@ -30,18 +34,7 @@ public class CreateDBController {
 
     @FXML
     void initialize() {
-        /*
-        // Connection connection = <your java.sql.Connection>
-ResultSet resultSet = connection.getMetaData().getCatalogs();
 
-//iterate each catalog in the ResultSet
-while (resultSet.next()) {
-  // Get the database name, which is at position 1
-  String databaseName = resultSet.getString(1);
-}
-resultSet.close();
-         */
-        // Change window on button pressed
         CreateDBButton.setOnAction(actionEvent -> {
             String newDBname = newDBNameField.getText();
             if (!newDBname.isEmpty() /* && !isExist(text) */) {
@@ -54,7 +47,12 @@ resultSet.close();
                     e.printStackTrace();
                 }
 
-                // todo SQL create database 'newDBname'
+
+                try {
+                    createDB(newDBname, Server.getConnection());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
                 Stage stage = new Stage();
                 stage.setScene(new Scene(loader.getRoot()));
@@ -67,4 +65,12 @@ resultSet.close();
             }
         });
     }
+
+    public static void createDB(String newDBname, Connection connection) throws SQLException {
+        Statement statement = connection.createStatement();
+        ResultSet result = statement.executeQuery("CREATE DATABASE " + newDBname);
+
+    }
 }
+
+

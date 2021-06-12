@@ -20,38 +20,16 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    private static void listDownAllDatabases(Connection connection) {
-        try {
-            PreparedStatement ps = connection
-                    .prepareStatement("SELECT datname FROM pg_database WHERE datistemplate = false;");
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                System.out.println(rs.getString(1));
-            }
-            rs.close();
-            ps.close();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
-    public static void getConnection() {
-        String url = "jdbc:postgresql://localhost:5432/TryDriver";
-        String user = "postgres" ;
-        String pass = "12341234" ;
-        try {
-            Connection connection = DriverManager.getConnection(url, user, pass);
-            listDownAllDatabases(connection);
-        }
-        catch (Exception ex){
-            ex.printStackTrace();
-        }
-
-    }
 
     public static void main(String[] args) {
-        getConnection();
-        //launch(args);
+       try{
+           Server.getConnection();
+       }  catch (Exception ex){
+           ex.printStackTrace();
+       }
+
+        launch(args);
     }
 }
