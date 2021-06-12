@@ -40,7 +40,7 @@ CREATE TABLE АБОНЕМЕНТ
     ЦЕНА             	         INT        	NOT NULL,
     "ПРОДОЛЖИТЕЛЬНОСТЬ, мес"     SMALLINT    	NOT NULL,
     НАЗВАНИЕ                     VARCHAR(64)    NOT NULL,
-    "РАЗРЕШЕННЫЕ АКТИВНОСТИ"     АКТИВНОСТЬ[]   NOT NULL
+    "РАЗРЕШЕННЫЕ АКТИВНОСТИ"     АКТИВНОСТЬ   NOT NULL
 );
 
 CREATE TABLE РАБОТНИК
