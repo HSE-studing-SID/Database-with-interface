@@ -11,20 +11,17 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class MainWindowController {
 
-    @FXML
-    private ResourceBundle resources;
+    Connection connection;
 
-    @FXML
-    private URL location;
+    public void setConnection(Connection connection) {
+        this.connection = connection;
+    }
 
     @FXML
     private ComboBox<String> DBsDropList;
@@ -40,20 +37,7 @@ public class MainWindowController {
   
     @FXML
     void initialize() throws SQLException {
-      //  Connection connection = <your java.sql.Connection>
-    //    ResultSet resultSet = connection.getMetaData().getCatalogs();
-
-        //iterate each catalog in the ResultSet
-   //     while (resultSet.next()) {
-   //         // Get the database name, which is at position 1
-        //        String databaseName = resultSet.getString(1);
-   //     }
-   //     resultSet.close();
-
-      //  ResultSet rs = Statement.executeQuery("select UTL_INADDR.GET_HOST_NAME from dual");
-      //  while(rs.next())
-     //       System.out.println(rs.getString(1));
-
+        // todo listFill
 
         ConnectToDBButton.setOnAction(actionEvent -> {
             if (!DBsDropList.getSelectionModel().isEmpty()) {

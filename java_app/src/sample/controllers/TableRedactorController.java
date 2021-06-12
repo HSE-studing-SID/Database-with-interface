@@ -1,19 +1,20 @@
 package sample.controllers;
 
 import java.net.URL;
+import java.sql.Connection;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
-public class CreateTableController {
+public class TableRedactorController {
 
-    @FXML
-    private ResourceBundle resources;
+    Connection connection;
 
-    @FXML
-    private URL location;
+    public void setConnection(Connection connection) {
+        this.connection = connection;
+    }
 
     @FXML
     private TextField TableNameField;

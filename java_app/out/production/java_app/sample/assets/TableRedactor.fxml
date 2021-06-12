@@ -7,7 +7,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="572.0" prefWidth="940.0" style="-fx-background-color: #FFE4B5;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.CreateTableController">
+<AnchorPane prefHeight="572.0" prefWidth="940.0" style="-fx-background-color: #FFE4B5;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.TableRedactorController">
    <children>
       <Label layoutX="57.0" layoutY="51.0" text="Название таблицы: " />
       <TextField fx:id="TableNameField" layoutX="187.0" layoutY="47.0" />

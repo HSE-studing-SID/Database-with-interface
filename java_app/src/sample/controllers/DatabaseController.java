@@ -2,6 +2,7 @@ package sample.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
@@ -18,11 +19,11 @@ import javafx.stage.Stage;
 
 public class DatabaseController {
 
-    @FXML
-    private ResourceBundle resources;
+    Connection connection;
 
-    @FXML
-    private URL location;
+    public void setConnection(Connection connection) {
+        this.connection = connection;
+    }
 
     @FXML
     private Label label;
@@ -68,15 +69,16 @@ public class DatabaseController {
                 stage.hide();
             });
             confirm.setOnAction(actionEvent1 -> {
-                // todo SQL delete database
+                String dbName = ((Stage) label.getScene().getWindow()).getTitle();
+                // todo SQL delete database 'dbName'
                 stage.hide();
                 label.getScene().getWindow().hide();
             });
         });
 
-        // create table
+        // table redactor
         Edit.get(0).setOnAction(actionEvent -> {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/assets/CreateTable.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/assets/TableRedactor.fxml"));
 
             try {
                 loader.load();
@@ -84,8 +86,11 @@ public class DatabaseController {
                 e.printStackTrace();
             }
 
+            ((TableRedactorController) loader.getController()).setConnection(connection);
+
             Stage stage = new Stage();
             stage.setScene(new Scene(loader.getRoot()));
+            stage.setTitle("Редактор таблицы");
             stage.show();
         });
 

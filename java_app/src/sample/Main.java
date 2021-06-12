@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.postgresql.PGProperty;
+import sample.controllers.MainWindowController;
 
 import java.sql.*;
 import java.util.Properties;
@@ -14,9 +15,12 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/sample/assets/MainWindow.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/assets/MainWindow.fxml"));
+        loader.load();
+        ((MainWindowController)loader.getController()).setConnection(getConnection());
+
         primaryStage.setTitle("Start screen");
-        primaryStage.setScene(new Scene(root, 1280, 800));
+        primaryStage.setScene(new Scene(loader.getRoot(), 1280, 800));
         primaryStage.show();
     }
 
@@ -36,22 +40,19 @@ public class Main extends Application {
         }
     }
 
-    public static void getConnection() {
+    public static Connection getConnection() throws Exception {
         String url = "jdbc:postgresql://localhost:5432/TryDriver";
-        String user = "postgres" ;
-        String pass = "12341234" ;
-        try {
-            Connection connection = DriverManager.getConnection(url, user, pass);
-            listDownAllDatabases(connection);
-        }
-        catch (Exception ex){
-            ex.printStackTrace();
-        }
-
+        String user = "postgres";
+        String pass = "12341234";
+        return DriverManager.getConnection(url, user, pass);
     }
 
     public static void main(String[] args) {
-        getConnection();
-        //launch(args);
+//        try {
+//            getConnection();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+        launch(args);
     }
 }
