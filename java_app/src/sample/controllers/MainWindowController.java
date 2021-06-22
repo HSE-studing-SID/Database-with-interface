@@ -7,20 +7,19 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import sample.Database;
+import sample.Server;
 
-import java.io.IOException;
-import java.net.URL;
-import java.sql.*;
 import java.sql.SQLException;
-import java.util.ResourceBundle;
 
 public class MainWindowController {
 
-    Connection connection;
+    private Server server;
 
-    public void setConnection(Connection connection) {
-        this.connection = connection;
+    public void setServer(Server server) {
+        this.server = server;
     }
 
     @FXML
@@ -34,24 +33,52 @@ public class MainWindowController {
 
     @FXML
     private Label ErrorLabel;
+
+    @FXML
+    private AnchorPane MainPain;
   
     @FXML
-    void initialize() throws SQLException {
-        // todo listFill
+    void initialize() {
+        DBsDropList.setOnMouseClicked(mouseEvent -> {
+            DBsDropList.setItems(server.listDownAllDatabases());
+        });
 
         ConnectToDBButton.setOnAction(actionEvent -> {
             if (!DBsDropList.getSelectionModel().isEmpty()) {
+                String dbName = DBsDropList.getSelectionModel().getSelectedItem();
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/assets/Database.fxml"));
 
+                Database db = null;
                 try {
-                    loader.load();
-                } catch (IOException e) {
+                    db = server.getDatabase(dbName);
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 
-                Stage stage = new Stage();
-                stage.setScene(new Scene(loader.getRoot()));
-                stage.show();
+                if (db != null && db.getConnection() == null) {
+                    try {
+                        loader.load();
+                        ((DatabaseController) loader.getController()).init(db);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    Stage stage = new Stage();
+                    stage.setScene(new Scene(loader.getRoot()));
+                    stage.setTitle(dbName);
+                    Database finalDb = db;
+                    stage.setOnCloseRequest(windowEvent -> {
+                        try {
+                            finalDb.disconnect();
+                        } catch (SQLException throwables) {
+                            throwables.printStackTrace();
+                        }
+                    });
+                    stage.show();
+                } else {
+                    ErrorLabel.setText("Вы уже подключены к этой базе данных!");
+                }
+                DBsDropList.getSelectionModel().clearSelection();
             } else {
                 ErrorLabel.setText("Укажите базу данных или создайте новую");
             }
@@ -62,7 +89,8 @@ public class MainWindowController {
 
             try {
                 loader.load();
-            } catch (IOException e) {
+                ((CreateDBController) loader.getController()).setServer(server);
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
@@ -72,6 +100,4 @@ public class MainWindowController {
             stage.show();
         });
     }
-
-
 }

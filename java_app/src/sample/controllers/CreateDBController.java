@@ -1,10 +1,8 @@
 package sample.controllers;
 
 import java.io.IOException;
-import java.net.URL;
 import java.sql.Connection;
 import java.sql.*;
-import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -12,21 +10,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import sample.Database;
 import sample.Server;
 
 public class CreateDBController {
 
-    Connection connection;
+    private Server server;
 
-    public void setConnection(Connection connection) {
-        this.connection = connection;
+    public void setServer(Server server) {
+        this.server = server;
     }
-
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
 
     @FXML
     private TextField newDBNameField;
@@ -42,23 +35,20 @@ public class CreateDBController {
         // Change window on button pressed
         CreateDBButton.setOnAction(actionEvent -> {
             String newDBname = newDBNameField.getText();
-            if (!newDBname.isEmpty() /* && !isExist(text) */) {
+            boolean contains = server.listDownAllDatabases().contains(newDBname);
+            if (!newDBname.isEmpty() && !contains) {
                 CreateDBButton.getScene().getWindow().hide();
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/assets/Database.fxml"));
 
+                Database d = null;
                 try {
                     loader.load();
-                } catch (IOException e) {
+                    d = server.createDB(newDBname);
+                } catch (IOException | SQLException e) {
                     e.printStackTrace();
                 }
 
-
-                try {
-                    createDB(newDBname, Server.getConnection());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
+                ((DatabaseController) loader.getController()).init(d);
                 Stage stage = new Stage();
                 stage.setScene(new Scene(loader.getRoot()));
                 stage.setTitle(newDBname);
@@ -69,12 +59,6 @@ public class CreateDBController {
                 errorLable.setText("База данных с таким именем уже существует");
             }
         });
-    }
-
-    public static void createDB(String newDBname, Connection connection) throws SQLException {
-        Statement statement = connection.createStatement();
-        ResultSet result = statement.executeQuery("CREATE DATABASE " + newDBname);
-
     }
 }
 

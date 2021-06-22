@@ -17,7 +17,10 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/sample/assets/MainWindow.fxml"));
         loader.load();
-        ((MainWindowController)loader.getController()).setConnection(Server.getConnection());
+
+        Server postgresql = new Server("localhost", "5432", "postgres", "444783");
+
+        ((MainWindowController)loader.getController()).setServer(postgresql);
 
         primaryStage.setTitle("Start screen");
         primaryStage.setScene(new Scene(loader.getRoot(), 1280, 800));
@@ -26,12 +29,6 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-//       try {
-//           Server.getConnection();
-//       }  catch (Exception ex){
-//           ex.printStackTrace();
-//       }
-
        launch(args);
     }
 }

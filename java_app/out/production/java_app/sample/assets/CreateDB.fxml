@@ -16,6 +16,6 @@
       </Text>
       <TextField fx:id="newDBNameField" layoutX="142.0" layoutY="161.0" prefHeight="38.0" prefWidth="262.0" />
       <Button fx:id="CreateDBButton" layoutX="235.0" layoutY="239.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="76.0" text="Создать" />
-      <Label fx:id="errorLable" layoutX="176.0" layoutY="199.0" prefHeight="19.0" prefWidth="194.0" textFill="RED" />
+      <Label fx:id="errorLable" alignment="CENTER" layoutX="78.0" layoutY="199.0" prefHeight="19.0" prefWidth="391.0" textAlignment="CENTER" textFill="RED" />
    </children>
 </AnchorPane>

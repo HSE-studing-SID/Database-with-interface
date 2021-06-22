@@ -11,9 +11,11 @@
    <children>
       <Label layoutX="57.0" layoutY="51.0" text="Название таблицы: " />
       <TextField fx:id="TableNameField" layoutX="187.0" layoutY="47.0" />
-      <Label fx:id="ErrorLabel" layoutX="369.0" layoutY="51.0" prefHeight="19.0" prefWidth="133.0" text="Label" textFill="RED" />
-      <TableView layoutX="93.0" layoutY="141.0" prefHeight="222.0" prefWidth="754.0" />
-      <Button layoutX="836.0" layoutY="450.0" mnemonicParsing="false" text="Добавить" />
-      <ToolBar layoutX="7.0" layoutY="390.0" prefHeight="40.0" prefWidth="927.0" />
+      <Label fx:id="ErrorLabel" layoutX="369.0" layoutY="51.0" prefHeight="19.0" prefWidth="133.0" textFill="RED" />
+      <TableView fx:id="tableView" layoutX="93.0" layoutY="141.0" prefHeight="222.0" prefWidth="754.0" />
+      <Button fx:id="addRowButton" layoutX="828.0" layoutY="450.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="84.0" text="Добавить" />
+      <ToolBar fx:id="toolBar" layoutY="390.0" prefHeight="40.0" prefWidth="940.0" />
+      <Button fx:id="deleteTableButton" layoutX="790.0" layoutY="24.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="133.0" style="-fx-background-color: #FF5555;" text="Удалить таблицу" textAlignment="CENTER" />
+      <Button fx:id="saveChangesButton" layoutX="686.0" layoutY="523.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="237.0" text="Сохранить изменения" />
    </children>
 </AnchorPane>
